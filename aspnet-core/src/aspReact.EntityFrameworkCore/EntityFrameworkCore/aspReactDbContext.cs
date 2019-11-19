@@ -3,6 +3,7 @@ using Abp.Zero.EntityFrameworkCore;
 using aspReact.Authorization.Roles;
 using aspReact.Authorization.Users;
 using aspReact.MultiTenancy;
+using reactjs.Models;
 
 namespace aspReact.EntityFrameworkCore
 {
@@ -14,5 +15,8 @@ namespace aspReact.EntityFrameworkCore
             : base(options)
         {
         }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Category> categories { get; set; }
     }
 }

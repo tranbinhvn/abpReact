@@ -1,12 +1,13 @@
 ﻿using Abp.Domain.Services;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace reactjs.Models
 {
     public interface IAuthorManager: IDomainService
     {
-        IEnumerable<Author> GetAllList();
+        IQueryable<Author> GetAllList();
         Author GetAuthorById(int id);
         Task<Author> Create(Author entity);
         void Update(Author entity);
