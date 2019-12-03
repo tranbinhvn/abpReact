@@ -2,6 +2,7 @@
 using Abp.Domain.Services;
 using Abp.UI;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace reactjs.Models
@@ -40,7 +41,7 @@ namespace reactjs.Models
             }
         }
 
-        public IEnumerable<Author> GetAllList()
+        public IQueryable<Author> GetAllList()
         {
             return _repoAuthor.GetAllIncluding(x => x.Books);
         }
