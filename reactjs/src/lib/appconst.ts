@@ -3,7 +3,7 @@ const AppConsts = {
     defaultAdminUserName: 'admin',
   },
   localization: {
-    defaultLocalizationSourceName: 'abpReact',
+    defaultLocalizationSourceName: 'aspReact',
   },
   authorization: {
     encrptedAuthTokenName: 'enc_auth_token',
