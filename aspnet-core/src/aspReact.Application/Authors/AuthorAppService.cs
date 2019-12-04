@@ -1,5 +1,8 @@
 ﻿using Abp.Application.Services;
 using Abp.Application.Services.Dto;
+using Abp.Authorization;
+using Abp.UI;
+using aspReact.Authorization;
 using aspReact.Authors.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,12 +12,14 @@ using System.Threading.Tasks;
 
 namespace aspReact.Authors
 {
+    [AbpAuthorize(PermissionNames.Pages_Authors)]
     public class AuthorAppService : ApplicationService, IAuthorAppService
     {
         private readonly IAuthorManager _authorManager;
         public AuthorAppService(IAuthorManager authorManager)
         {
             _authorManager = authorManager;
+            LocalizationSourceName = aspReactConsts.LocalizationSourceName;
         }
 
         public async Task Create(CreateAuthorInput input)
@@ -42,6 +47,9 @@ namespace aspReact.Authors
         [HttpGet]
         public async Task<ListResultDto<GetAuthorOutput>> ListAll()
         {
+            var test1 = L("TenantName_Regex_Description");
+
+            Logger.Info("Test logger.Info");
             var authors = _authorManager.GetAllList();
             var result = await authors.ToListAsync();
             return new ListResultDto<GetAuthorOutput>(ObjectMapper.Map<List<GetAuthorOutput>>(result));
@@ -50,9 +58,19 @@ namespace aspReact.Authors
         [HttpGet]
         public async Task<ListResultDto<GetAuthorOutput>> ListAllPaging()
         {
-            var authors = _authorManager.GetAllList();
-            var result = await authors.ToListAsync();
-            return new ListResultDto<GetAuthorOutput>(ObjectMapper.Map<List<GetAuthorOutput>>(result));
+            try
+            {
+                var authors = _authorManager.GetAllList();
+                var result = await authors.ToListAsync();
+                var test = new ListResultDto<GetAuthorOutput>(ObjectMapper.Map<List<GetAuthorOutput>>(result));
+                return test;
+            }
+            catch (System.Exception ex)
+            {
+
+                throw new UserFriendlyException(ex.ToString());
+            }
+           
         }
 
         public void Update(UpdateAuthorInput input)
